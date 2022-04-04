@@ -1,7 +1,7 @@
-import { CartItem } from "./interfaces/cart-item";
-import { OrderStatus } from "./interfaces/order-status";
+type CartItem = { name: string; price: number };
+type OrderStatus = "open" | "closed";
 
-export class ShoppingCart {
+export class ShoppingCartLegacy {
     private readonly _items: CartItem[] = [];
     private _orderStatus: OrderStatus = "open";
 
@@ -26,7 +26,9 @@ export class ShoppingCart {
         }
 
         this._orderStatus = "closed";
-        this.sendMessage("your order was received.");
+        this.sendMessage(
+            `your order with a total of ${this.total()} was received.`,
+        );
         this.saveOrder();
         this.clear();
     }
@@ -56,3 +58,14 @@ export class ShoppingCart {
         return this._orderStatus;
     }
 }
+
+const shoppingCartLegacy = new ShoppingCartLegacy();
+shoppingCartLegacy.addItem({ name: "T-shirt", price: 49.99 });
+shoppingCartLegacy.addItem({ name: "Notebook", price: 4.99 });
+shoppingCartLegacy.addItem({ name: "Eraser", price: 1.99 });
+
+console.log(shoppingCartLegacy.items);
+console.log(shoppingCartLegacy.total());
+console.log(shoppingCartLegacy.orderStatus);
+shoppingCartLegacy.checkout();
+console.log(shoppingCartLegacy.orderStatus);

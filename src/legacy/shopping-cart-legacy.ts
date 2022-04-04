@@ -1,8 +1,9 @@
 type CartItem = { name: string; price: number };
+type OrderStatus = "open" | "closed";
 
 export class ShoppingCartLegacy {
     private readonly _items: CartItem[] = [];
-    private orderStatus: "open" | "closed" = "open";
+    private _orderStatus: OrderStatus = "open";
 
     addItem(item: CartItem): void {
         this._items.push(item);
@@ -24,8 +25,10 @@ export class ShoppingCartLegacy {
             return;
         }
 
-        this.orderStatus = "closed";
-        this.sendMessage("your order was received.");
+        this._orderStatus = "closed";
+        this.sendMessage(
+            `your order with a total of ${this.total()} was received.`,
+        );
         this.saveOrder();
         this.clear();
     }
@@ -50,6 +53,10 @@ export class ShoppingCartLegacy {
     get items(): Readonly<CartItem[]> {
         return this._items;
     }
+
+    get orderStatus(): OrderStatus {
+        return this._orderStatus;
+    }
 }
 
 const shoppingCartLegacy = new ShoppingCartLegacy();
@@ -59,11 +66,6 @@ shoppingCartLegacy.addItem({ name: "Eraser", price: 1.99 });
 
 console.log(shoppingCartLegacy.items);
 console.log(shoppingCartLegacy.total());
-
-shoppingCartLegacy.clear();
-
-console.log(shoppingCartLegacy.total());
-
-shoppingCartLegacy.addItem({ name: "Notebook", price: 4.99 });
-
+console.log(shoppingCartLegacy.orderStatus);
 shoppingCartLegacy.checkout();
+console.log(shoppingCartLegacy.orderStatus);
