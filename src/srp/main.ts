@@ -1,6 +1,6 @@
-import { Messenger } from "./entities/services/messenger";
+import { Messenger } from "./services/messenger";
 import { Order } from "./entities/order";
-import { Persistence } from "./entities/services/persistence";
+import { Persistence } from "./services/persistence";
 import { Product } from "./entities/product";
 import { ShoppingCart } from "./entities/shopping-cart";
 

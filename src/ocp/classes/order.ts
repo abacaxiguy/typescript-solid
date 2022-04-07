@@ -1,6 +1,6 @@
 import { OrderStatus } from "./interfaces/order-status";
-import { Messenger } from "./services/messenger";
-import { Persistence } from "./services/persistence";
+import { Messenger } from "../services/messenger";
+import { Persistence } from "../services/persistence";
 import { ShoppingCart } from "./shopping-cart";
 
 export class Order {
@@ -24,7 +24,7 @@ export class Order {
 
         this._orderStatus = "closed";
         this.messenger.sendMessage(
-            `your order with a total of ${this.cart.total()} was received.`,
+            `your order with a total of ${this.cart.totalWithDiscount()} was received.`,
         );
         this.persistence.saveOrder();
         this.cart.clear();

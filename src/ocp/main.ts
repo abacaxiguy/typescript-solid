@@ -1,10 +1,12 @@
-import { Messenger } from "./entities/services/messenger";
-import { Order } from "./entities/order";
-import { Persistence } from "./entities/services/persistence";
-import { Product } from "./entities/product";
-import { ShoppingCart } from "./entities/shopping-cart";
+import { Messenger } from "./services/messenger";
+import { Order } from "./classes/order";
+import { Persistence } from "./services/persistence";
+import { Product } from "./classes/product";
+import { ShoppingCart } from "./classes/shopping-cart";
+import { NoDiscount } from "./classes/discount";
 
-const shoppingCart = new ShoppingCart();
+const noDiscount = new NoDiscount();
+const shoppingCart = new ShoppingCart(noDiscount);
 const messenger = new Messenger();
 const persistence = new Persistence();
 const order1 = new Order(shoppingCart, messenger, persistence);
@@ -15,6 +17,7 @@ shoppingCart.addItem(new Product("Eraser", 1.99));
 
 console.log(shoppingCart.items);
 console.log(shoppingCart.total());
+console.log(shoppingCart.totalWithDiscount());
 console.log(order1.orderStatus);
 order1.checkout();
 console.log(order1.orderStatus);
